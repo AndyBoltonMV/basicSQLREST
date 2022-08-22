@@ -5,7 +5,7 @@ const { secret } = require("../../config");
 exports.createUser = async (req, res) => {
   try {
     const user = await User.create(req.body);
-    const token = jwt.sign(user.id, secret);
+    const token = jwt.sign({ id: user.id }, secret);
 
     res.status(200).send({ user, token });
   } catch (error) {
@@ -25,7 +25,7 @@ exports.readUser = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
-    const token = jwt.sign(req.user.id, secret);
+    const token = jwt.sign({ id: req.user.id }, secret);
 
     res.status(200).send({ user: req.user, token });
   } catch (error) {
