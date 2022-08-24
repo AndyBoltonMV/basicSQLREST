@@ -1,4 +1,4 @@
-const { Content } = require("../models");
+const { Content, User } = require("../models");
 
 exports.createContent = async (req, res) => {
   try {
@@ -25,7 +25,8 @@ exports.readContent = async (req, res) => {
 
 exports.readByUser = async (req, res) => {
   try {
-    const foundContent = await req.user.getContents();
+    const user = await User.findOne({ where: req.query });
+    const foundContent = await user.getContents();
 
     res.status(200).send({ foundContent });
   } catch (error) {
